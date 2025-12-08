@@ -56,7 +56,7 @@ input_data = pd.DataFrame({
 })
 
 # One-hot encode the categorical variables to match the model's training data
-input_data_encoded = pd.get_dummies(input_data, columns=['Reason', 'Employment_Status', 'Employment_Sector', 'Lender'])
+input_data_encoded = pd.get_dummies(input_data, columns=['Reason', 'Employment_Status', 'Employment_Sector'])
 
 # Ensure all expected columns are present (fill missing columns with 0s)
 model_columns = model.feature_names_in_  # Get the feature names used during training
