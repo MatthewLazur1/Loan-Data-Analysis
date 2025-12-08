@@ -90,7 +90,6 @@ categorical_df[f'Employment_Status_{employment_status}'] = 1
 categorical_df[f'Employment_Sector_{employment_sector}'] = 1
 
 final_input = pd.concat([scaled_numerical_df, categorical_df], axis=1)
-st.write(categorical_df.columns.tolist())
 
 # Ensure all expected columns are present
 model_columns = model.feature_names_in_  # Get the feature names used during training
