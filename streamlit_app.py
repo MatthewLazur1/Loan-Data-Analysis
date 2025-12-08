@@ -63,8 +63,7 @@ input_data_encoded = pd.get_dummies(input_data, columns=['Reason', 'Employment_S
 
 
 numerical_cols = ['Requested_Loan_Amount', 'FICO_score', 'Monthly_Gross_Income',
-                         'Monthly_Housing_Payment', 'Ever_Bankrupt_or_Foreclose',
-                         'income_to_housing_ratio', 'loan_to_income_ratio']
+                         'Monthly_Housing_Payment', 'Ever_Bankrupt_or_Foreclose']
         
 numerical_data = input_data[numerical_cols]
 
