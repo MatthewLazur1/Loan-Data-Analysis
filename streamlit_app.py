@@ -35,7 +35,6 @@ employment_sector_options = ['consumer_discretionary', 'information_technology',
 employment_sector = st.selectbox("Employment Sector (Employment_Sector)", employment_sector_options,
                                  format_func=format_label)
 
-lender = st.selectbox("Lender (Lender)", ["A", "B", "C"])
 
 # Numeric inputs
 requested_loan_amount = st.slider("Requested Loan Amount (Requested_Loan_Amount)", min_value=1000.0, max_value=500000.0, step=1000.0)
@@ -53,8 +52,7 @@ input_data = pd.DataFrame({
     "Employment_Sector": [employment_sector],
     "Monthly_Gross_Income": [monthly_gross_income],
     "Monthly_Housing_Payment": [monthly_housing_payment],
-    "Ever_Bankrupt_or_Foreclose": [ever_bankrupt_or_foreclose],
-    "Lender": [lender]
+    "Ever_Bankrupt_or_Foreclose": [ever_bankrupt_or_foreclose]
 })
 
 # One-hot encode the categorical variables to match the model's training data
