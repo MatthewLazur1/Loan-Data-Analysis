@@ -3,13 +3,11 @@ import pickle
 import pandas as pd
 import sklearn
 
-
 # Title for the app
 st.markdown(
     "<h1 style='text-align: center; background-color: #ffcccc; padding: 10px; color: #cc0000;'><b>Loan Analysis</b></h1>",
     unsafe_allow_html=True
 )
-
 # Load the trained model
 with open("BUS458_model.pkl", "rb") as file:
     model = pickle.load(file)
