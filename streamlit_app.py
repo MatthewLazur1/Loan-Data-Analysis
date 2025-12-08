@@ -12,6 +12,9 @@ st.markdown(
 with open("BUS458_model.pkl", "rb") as file:
     model = pickle.load(file)
 
+with open('scaler.pkl', 'rb') as f:
+    scaler = pickle.load(f)
+
 
 # Numeric inputs
 st.header("Enter Loan Applicant's Details")
@@ -58,19 +61,32 @@ input_data = pd.DataFrame({
 # One-hot encode the categorical variables to match the model's training data
 input_data_encoded = pd.get_dummies(input_data, columns=['Reason', 'Employment_Status', 'Employment_Sector'])
 
+
+numerical_cols = ['Requested_Loan_Amount', 'FICO_score', 'Monthly_Gross_Income',
+                         'Monthly_Housing_Payment', 'Ever_Bankrupt_or_Foreclose',
+                         'income_to_housing_ratio', 'loan_to_income_ratio']
+        
+numerical_data = input_data[numerical_cols]
+
+scaled_numerical = scaler.transform(numerical_data)
+scaled_numerical_df = pd.DataFrame(scaled_numerical, columns=numerical_cols)
+
+# STEP 4: Combine all features
+final_input = pd.concat([scaled_numerical_df, input_data_encoded], axis=1)
+
 # Ensure all expected columns are present (fill missing columns with 0s)
 model_columns = model.feature_names_in_  # Get the feature names used during training
 for col in model_columns:
-    if col not in input_data_encoded.columns:
-        input_data_encoded[col] = 0  # Add missing column with value 0
+    if col not in final_input.columns:
+        final_input[col] = 0  # Add missing column with value 0
 
 # Reorder columns to match the model's training data
-input_data_encoded = input_data_encoded[model_columns]
+final_input = final_input[model_columns]
 
 # Predict button
 if st.button("Evaluate Loan"):
     # Predict using the loaded model
-    y_pred_proba_log = model.predict_proba(input_data_encoded)[:, 1]  # probability for ROC
+    y_pred_proba_log = model.predict_proba(final_input)[:, 1]  # probability for ROC
 
     # Apply cutoff threshold
     threshold = 0.65
