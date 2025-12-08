@@ -58,10 +58,6 @@ input_data = pd.DataFrame({
     "Ever_Bankrupt_or_Foreclose": [ever_bankrupt_or_foreclose]
 })
 
-# One-hot encode the categorical variables to match the model's training data
-input_data_encoded = pd.get_dummies(input_data, columns=['Reason', 'Employment_Status', 'Employment_Sector'])
-
-
 numerical_cols = ['Requested_Loan_Amount', 'FICO_score', 'Monthly_Gross_Income',
                          'Monthly_Housing_Payment', 'Ever_Bankrupt_or_Foreclose']
         
@@ -71,8 +67,31 @@ numerical_data = input_data[numerical_cols]
 scaled_numerical = scaler.transform(numerical_data)
 scaled_numerical_df = pd.DataFrame(scaled_numerical, columns=numerical_cols)
 
-final_input = pd.concat([scaled_numerical_df, input_data_encoded], axis=1)
-st.write(input_data_encoded.columns.tolist())
+all_categories = {
+    'Reason': ['cover_an_unexpected_cost', 'credit_card_refinancing',
+               'home_improvement', 'major_purchase', 'other', 'debt_conslidation'],
+    'Employment_Status': ['full_time', 'part_time', 'unemployed'],
+    'Employment_Sector': ['consumer_discretionary', 'information_technology', 'energy',
+                         'consumer_staples', 'communication_services', 'materials',
+                         'utilities', 'real_estate', 'health_care', 'industrials',
+                         'financials', 'unknown']
+}
+
+# Create empty DataFrame with ALL possible categorical columns
+all_categorical_cols = []
+for prefix, categories in all_categories.items():
+    for cat in categories:
+        all_categorical_cols.append(f'{prefix}_{cat}')
+
+categorical_df = pd.DataFrame(0, index=[0], columns=all_categorical_cols)
+
+# Set the selected values to 1
+categorical_df[f'Reason_{reason}'] = 1
+categorical_df[f'Employment_Status_{employment_status}'] = 1
+categorical_df[f'Employment_Sector_{employment_sector}'] = 1
+
+final_input = pd.concat([scaled_numerical_df, categorical_df], axis=1)
+st.write(categorical_df.columns.tolist())
 # Ensure all expected columns are present (fill missing columns with 0s)
 model_columns = model.feature_names_in_  # Get the feature names used during training
 for col in model_columns:
