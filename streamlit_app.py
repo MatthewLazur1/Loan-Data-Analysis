@@ -70,13 +70,13 @@ numerical_data = input_data[numerical_cols]
 scaled_numerical = scaler.transform(numerical_data)
 scaled_numerical_df = pd.DataFrame(scaled_numerical, columns=numerical_cols)
 
-# STEP 4: Combine all features
 final_input = pd.concat([scaled_numerical_df, input_data_encoded], axis=1)
 
 # Ensure all expected columns are present (fill missing columns with 0s)
 model_columns = model.feature_names_in_  # Get the feature names used during training
 for col in model_columns:
     if col not in final_input.columns:
+        st.error(f"Missing column: {col}")
         final_input[col] = 0  # Add missing column with value 0
 
 # Reorder columns to match the model's training data
