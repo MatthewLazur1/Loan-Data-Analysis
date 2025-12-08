@@ -29,7 +29,7 @@ reason_options = ['cover_an_unexpected_cost', 'credit_card_refinancing',
 reason = st.selectbox("Reason (Reason)", reason_options, 
                       format_func=lambda x: x.replace('_', ' ').title().replace('Conslidation', 'Consolidation'))
 
-employment_status = st.selectbox("Employment Status (Employment_Status)", ["Full-time", "Part-time", "Unemployed"])
+employment_status = st.selectbox("Employment Status (Employment_Status)", ["full-time", "part-time", "unemployed"])
 
 employment_sector_options = ['consumer_discretionary', 'information_technology', 'energy',
                             'consumer_staples', 'communication_services', 'materials',
