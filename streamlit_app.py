@@ -66,6 +66,7 @@ numerical_cols = ['Requested_Loan_Amount', 'FICO_score', 'Monthly_Gross_Income',
                          'Monthly_Housing_Payment', 'Ever_Bankrupt_or_Foreclose']
         
 numerical_data = input_data[numerical_cols]
+#Add this
 
 scaled_numerical = scaler.transform(numerical_data)
 scaled_numerical_df = pd.DataFrame(scaled_numerical, columns=numerical_cols)
