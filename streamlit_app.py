@@ -62,7 +62,6 @@ numerical_cols = ['Requested_Loan_Amount', 'FICO_score', 'Monthly_Gross_Income',
                          'Monthly_Housing_Payment', 'Ever_Bankrupt_or_Foreclose']
         
 numerical_data = input_data[numerical_cols]
-#Add this
 
 scaled_numerical = scaler.transform(numerical_data)
 scaled_numerical_df = pd.DataFrame(scaled_numerical, columns=numerical_cols)
@@ -92,11 +91,11 @@ categorical_df[f'Employment_Sector_{employment_sector}'] = 1
 
 final_input = pd.concat([scaled_numerical_df, categorical_df], axis=1)
 st.write(categorical_df.columns.tolist())
-# Ensure all expected columns are present (fill missing columns with 0s)
+
+# Ensure all expected columns are present
 model_columns = model.feature_names_in_  # Get the feature names used during training
 for col in model_columns:
     if col not in final_input.columns:
-        st.error(f"Missing column: {col}")
         final_input[col] = 0  # Add missing column with value 0
 
 # Reorder columns to match the model's training data
