@@ -59,7 +59,7 @@ input_data = pd.DataFrame({
 })
 
 # One-hot encode the categorical variables to match the model's training data
-input_data_encoded = pd.get_dummies(input_data, columns=['Reason', 'Employment_Status', 'Employment_Sector'], drop_first=True)
+input_data_encoded = pd.get_dummies(input_data, columns=['Reason', 'Employment_Status', 'Employment_Sector'])
 
 
 numerical_cols = ['Requested_Loan_Amount', 'FICO_score', 'Monthly_Gross_Income',
