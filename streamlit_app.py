@@ -71,7 +71,7 @@ scaled_numerical = scaler.transform(numerical_data)
 scaled_numerical_df = pd.DataFrame(scaled_numerical, columns=numerical_cols)
 
 final_input = pd.concat([scaled_numerical_df, input_data_encoded], axis=1)
-
+st.write(final_input.columns.tolist())
 # Ensure all expected columns are present (fill missing columns with 0s)
 model_columns = model.feature_names_in_  # Get the feature names used during training
 for col in model_columns:
